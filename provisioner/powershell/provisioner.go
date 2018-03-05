@@ -397,7 +397,7 @@ func (p *Provisioner) uploadEnvVars(flattenedEnvVars string) (envVarPath string,
 	// Upload all env vars to a powershell script on the target build file system
 	envVarReader := strings.NewReader(flattenedEnvVars)
 	uuid := uuid.TimeOrderedUUID()
-	envVarPath = fmt.Sprintf(`${env:SYSTEMROOT}\Temp\packer-env-vars-%s.ps1`, uuid)
+	envVarPath = fmt.Sprintf(`${env:SYSTEMROOT}/Temp/packer-env-vars-%s.ps1`, uuid)
 	log.Printf("Uploading env vars to %s", envVarPath)
 	err = p.communicator.Upload(envVarPath, envVarReader, nil)
 	if err != nil {
@@ -482,7 +482,7 @@ func (p *Provisioner) generateElevatedRunner(command string) (uploadedPath strin
 	// Only use %ENVVAR% format for environment variables when setting
 	// the log file path; Do NOT use $env:ENVVAR format as it won't be
 	// expanded correctly in the elevatedTemplate
-	logFile := `%SYSTEMROOT%\Temp\` + taskName + ".out"
+	logFile := `%SYSTEMROOT%/Temp/` + taskName + ".out"
 	command += fmt.Sprintf(" > %s 2>&1", logFile)
 
 	// elevatedTemplate wraps the command in a single quoted XML text
